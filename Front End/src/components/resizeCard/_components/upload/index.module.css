@@ -1,0 +1,120 @@
+.containerUpload {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  border: 1px #3c3c44 solid;
+  border-radius: 5px;
+  padding: 10px;
+  gap: 20px;
+}
+
+.uploadIcon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-image: var(--gradient);
+  border-radius: 50%;
+  padding: 15px;
+}
+
+.containerUpload h2 {
+  color: white;
+  text-align: center;
+  font-size: 1rem;
+}
+
+.choseImageBtn {
+  display: flex;
+  align-items: center;
+  background-image: var(--gradient);
+  padding: 8px 15px 8px 15px;
+  border-radius: 5px;
+  gap: 10px;
+  color: white;
+  cursor: pointer;
+  border: none;
+}
+
+.selectedImage {
+  width: 100%;
+  border-radius: 3px;
+}
+
+.containerBtns {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 5px;
+}
+
+.containerBtns p {
+  font-size: 0.8rem;
+  color: white;
+}
+
+.processImageBtn {
+  display: flex;
+  align-items: center;
+  background-image: var(--gradient);
+  padding: 8px 15px 8px 15px;
+  border-radius: 5px;
+  gap: 10px;
+  color: white;
+  cursor: pointer;
+  border: none;
+}
+
+.processImageBtnLoading {
+  display: flex;
+  align-items: center;
+  background-image: var(--gradient);
+  padding: 8px 15px 8px 15px;
+  border-radius: 5px;
+  gap: 10px;
+  color: white;
+  cursor: pointer;
+  border: none;
+  opacity: 50%;
+  pointer-events: none;
+}
+
+@keyframes loading {
+  from {
+    transform: rotate(0deg);
+  }
+
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.iconLoading {
+  animation: loading 2s linear infinite;
+}
+
+.changeImageBtn {
+  display: flex;
+  align-items: center;
+  border: 1px #3c3c44 solid;
+  background-color: #17171c;
+  padding: 8px 15px 8px 15px;
+  border-radius: 5px;
+  gap: 10px;
+  color: white;
+  cursor: pointer;
+}
+
+.changeImageBtnLoading {
+  display: flex;
+  align-items: center;
+  border: 1px #3c3c44 solid;
+  background-color: #17171c;
+  padding: 8px 15px 8px 15px;
+  border-radius: 5px;
+  gap: 10px;
+  color: white;
+  cursor: pointer;
+  opacity: 50%;
+  pointer-events: none;
+}
