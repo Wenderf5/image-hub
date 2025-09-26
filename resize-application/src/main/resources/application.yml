@@ -1,0 +1,40 @@
+spring:
+  application:
+    name: image-hub-resize-application
+
+  # Spring Auto Configurations
+  autoconfigure:
+    exclude:
+      - io.awspring.cloud.autoconfigure.s3.S3AutoConfiguration
+      #- org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration
+      #- org.springframework.boot.autoconfigure.orm.jpa.HibernateJpaAutoConfiguration
+
+  # rabbitMQ client settings
+  rabbitmq:
+    host: HOST
+    port: PORT
+    username: USER
+    password: PASSWORD
+    virtual-host: VHOST
+
+  # PostgreSQL database settings
+  datasource:
+    url: jdbc:postgresql://HOST:PORT/VHOST
+    username: USER
+    password: PASSWORD
+    driver-class-name: org.postgresql.Driver
+
+  # Hibernate Settings
+  jpa:
+    hibernate.ddl-auto: validate
+    show-sql: true
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+
+  # Redis settings
+  data:
+    redis:
+      host: HOST
+      port: PORT
+      password: PASSWORD
