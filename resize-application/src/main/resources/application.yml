@@ -1,6 +1,4 @@
 spring:
-  config:
-    import: optional:file:.env[.properties]
   application:
     name: resize-application
 
@@ -8,8 +6,6 @@ spring:
   autoconfigure:
     exclude:
       - io.awspring.cloud.autoconfigure.s3.S3AutoConfiguration
-      #- org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration
-      #- org.springframework.boot.autoconfigure.orm.jpa.HibernateJpaAutoConfiguration
 
   # rabbitMQ client settings
   rabbitmq:
