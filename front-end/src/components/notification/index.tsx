@@ -1,5 +1,6 @@
 import style from './index.module.css';
 import { MessageSquareWarning } from 'lucide-react';
+import { motion } from "framer-motion";
 
 interface props {
     icon?: React.ReactNode,
@@ -8,9 +9,13 @@ interface props {
 
 export function Notification({ icon, content }: props) {
     return (
-        <div className={style.container}>
+        <motion.div
+            initial={{ opacity: 0, scale: 0.5 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ duration: 0.2 }}
+            className={style.container}>
             {icon || <MessageSquareWarning color='white' size={28} />}
-            <p>{content || "Esssa é uma notificação qualquer, por favor ignore!"}</p>
-        </div>
+            <p>{content}</p>
+        </motion.div>
     );
 }

@@ -1,5 +1,6 @@
 import "./globals.css";
 import type { Metadata } from "next";
+import { RootLayoutWrapper } from "./RootLayoutWrapper";
 
 export const metadata: Metadata = {
   title: "Image Hub",
@@ -10,7 +11,9 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
   return (
     <html lang="pt-br">
       <body>
-        {children}
+        <RootLayoutWrapper>
+          {children}
+        </RootLayoutWrapper>
       </body>
     </html>
   )
