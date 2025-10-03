@@ -11,8 +11,8 @@ import {
     LoaderCircle as LoaderCircleIcon
 } from 'lucide-react';
 import { notificationFactory } from '@/utils/notificationFactory';
-import { AppDispatch } from '../../../../../redux-store';
-import { add, remove } from '../../../../../redux-store/slices/notificationListSlice';
+import { AppDispatch } from '../../../../redux-store';
+import { add, remove } from '../../../../redux-store/slices/notificationListSlice';
 import { v4 as uuidv4 } from 'uuid';
 
 export function Upload() {

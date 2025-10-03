@@ -4,7 +4,7 @@ import style from "./page.module.css";
 import { Notification } from "@/components/notification";
 import { ResizeCard } from "@/components/resizeCard";
 import { useSelector } from "react-redux";
-import { RootState } from "../../redux-store";
+import { RootState } from "../redux-store";
 
 export default function Home() {
   const notificationList = useSelector((state: RootState) => state.notificationList);
