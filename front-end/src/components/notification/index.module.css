@@ -1,0 +1,23 @@
+.container {
+    max-width: 450px;
+    position: absolute;
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    top: 0px;
+    right: 0px;
+    margin: 8px;
+    padding: 10px;
+    background: var(--gradient);
+    border-radius: 6px;
+}
+
+.container svg {
+    flex-shrink: 0;
+}
+
+.container p {
+    flex-grow: 1;
+    color: white;
+    font-size: 0.8rem;
+}

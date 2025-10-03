@@ -29,3 +29,16 @@
     font-size: 0.8rem;
     color: white;
 }
+
+@media (min-width: 426px) {
+    .container {
+        width: 400px;
+        display: flex;
+        flex-direction: column;
+        background-color: #26262c;
+        border: 1px #3c3c44 solid;
+        border-radius: 10px;
+        padding: 10px;
+        gap: 30px;
+    }
+}
