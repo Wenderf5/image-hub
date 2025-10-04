@@ -14,6 +14,7 @@ import { notificationFactory } from '@/utils/notificationFactory';
 import { AppDispatch } from '../../../../redux-store';
 import { add, remove } from '../../../../redux-store/slices/notificationListSlice';
 import { v4 as uuidv4 } from 'uuid';
+import { iconType } from '@/components/notification';
 
 export function Upload() {
     const dispatch = useDispatch<AppDispatch>();
@@ -22,8 +23,8 @@ export function Upload() {
     const [imageURL, setImageURL] = useState("");
     const [image, setImage] = useState<File | null>(null);
 
-    function handleInputFileChange(e: React.ChangeEvent<HTMLInputElement>) {
-        const file = e.target.files?.[0];
+    function handleInputFileChange(event: React.ChangeEvent<HTMLInputElement>) {
+        const file = event.target.files?.[0];
         if (file) {
             const url = URL.createObjectURL(file);
             setImageURL(url);
@@ -32,50 +33,75 @@ export function Upload() {
     }
 
     async function getStatusOfProcess(processId: string) {
-        const response = await fetch(`http://localhost:8080/image/resize/${processId}`, {
-            method: 'GET'
-        });
+        try {
+            const response = await fetch(`${process.env.NEXT_PUBLIC_BACK_END_ENDPOINT}/image/resize/${processId}`, {
+                method: 'GET'
+            });
+            const result = await response.json();
+            return result;
+        } catch (error) {
+            return {
+                status: 400
+            }
+        }
+    }
 
-        const result = await response.json();
-        return result;
+    function sendNotification(message: string, iconType?: iconType) {
+        const notification = notificationFactory(uuidv4(), message, iconType);
+        dispatch(add(notification));
+        setTimeout(() => {
+            dispatch(remove({ id: notification.id }));
+        }, 5000);
+    }
+
+    async function verifyProcess(processId: string, interval: NodeJS.Timeout) {
+        const resultOfProcess = await getStatusOfProcess(processId);
+
+        if (resultOfProcess.status === 200) {
+            downloadImage(resultOfProcess.imageUrl);
+            clearInterval(interval);
+            sendNotification("Sua imagem foi redimensionada com sucesso e o download começará automaticamente.", "checkCheckIcon");
+            setLoading(false);
+            return;
+        }
+
+        if (resultOfProcess.status === 400) {
+            sendNotification("Ocorreu um erro inesperado ao redimensionar a imagem.", "xIcon");
+            clearInterval(interval);
+            setLoading(false);
+            return;
+        }
     }
 
     async function sendImageToResize() {
-        setLoading(true);
+        try {
+            if (!image) {
+                sendNotification("Por favor, selecione uma imagem para redimensionar.", "fileWarningIcon");
+                return;
+            }
 
-        const formData = new FormData();
-        if (image) {
+            setLoading(true);
+            const formData = new FormData();
             formData.append("image", image);
-        }
 
-        const response = await fetch("http://localhost:8080/image/resize", {
-            method: 'POST',
-            body: formData
-        });
+            const response = await fetch(`${process.env.NEXT_PUBLIC_BACK_END_ENDPOINT}/image/resize`, {
+                method: 'POST',
+                body: formData
+            });
+            const result = await response.json();
 
-        const result = await response.json();
+            if (response.status === 200) {
+                const interval = setInterval(() => {
+                    verifyProcess(result.processId, interval);
+                }, 1000);
+                return;
+            }
 
-        if (response.status === 200) {
-            const intervalId = setInterval(async () => {
-                const resultOfProcess = await getStatusOfProcess(result.processId);
-
-                if (resultOfProcess.status === 200) {
-                    downloadImage(resultOfProcess.imageUrl);
-                    clearInterval(intervalId);
-
-                    const notfication = notificationFactory(uuidv4(), "Sua imagem foi redimensionada com sucesso e o download começará automaticamente.");
-                    dispatch(add(notfication));
-                    setTimeout(() => {
-                        dispatch(remove({ id: notfication.id }));
-                    }, 5000);
-                    
-                    setLoading(false);
-                    return;
-                }
-
-                clearInterval(intervalId);
-                setLoading(false);
-            }, 1000);
+            sendNotification("Ocorreu um erro inesperado ao redimensionar a imagem.", "xIcon");
+            setLoading(false);
+        } catch (error) {
+            sendNotification("Ocorreu um erro inesperado ao redimensionar a imagem.", "xIcon");
+            setLoading(false);
         }
     }
 

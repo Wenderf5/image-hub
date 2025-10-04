@@ -1,8 +1,9 @@
+import { iconType } from "@/components/notification";
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
 export interface notification {
     id: string,
-    icon?: React.ReactNode,
+    iconType?: iconType,
     content: string
 }
 

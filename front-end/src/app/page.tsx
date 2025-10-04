@@ -14,7 +14,7 @@ export default function Home() {
       {notificationList.map((notification) => (
         <Notification
           key={notification.id}
-          icon={notification.icon}
+          iconType={notification.iconType}
           content={notification.content}
         />
       ))}
